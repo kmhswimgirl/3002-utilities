@@ -1,0 +1,7 @@
+Turtlebot Dashboard:
+=====================
+Purpose: checks overall turtlebot functionality
+Rough Idea: Turtlebot Dashboard + Controls
+
+[] Battery display
+
