@@ -1,7 +1,10 @@
 Turtlebot Dashboard:
 =====================
+Pkg Name: turtlebot3_dashboard, tb3_debug
 Purpose: checks overall turtlebot functionality
 Rough Idea: Turtlebot Dashboard + Controls
 
 [] Battery display
-
+[] arrow controls (publish velocities to /cmd_vel)
+[] topic list
+[] 
