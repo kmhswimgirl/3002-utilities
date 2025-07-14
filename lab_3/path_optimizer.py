@@ -1,6 +1,7 @@
 # made for the lab 3 extra credit "optimize path"
 
-"""
+""" 
+============== Psuedocode && Notes ================
 workflow:
     input: path from A* function (type Path)
     output: optimized path to send to driver.py (type Path)
@@ -32,10 +33,8 @@ ways to "optimize the path":
         Take in the path and check if there are 3 co-linear points. 
         This means that the middle point (path index + 1) can be eliminated from the path.
     
-    vectors
+===================================================
 """
-
-path:list[tuple] = [(0,1), (0,2), (0,3), (1,4), (2,4), (3,4)] # output should be [(0,1), (0,3), (1,4), (3,4)]
 
 def is_colinear(pt_1:tuple, pt_2:tuple, pt_3:tuple):
     """
@@ -67,24 +66,30 @@ def is_colinear(pt_1:tuple, pt_2:tuple, pt_3:tuple):
     else: return False
 
 def optimize_path(path: list[tuple]):
-
-    for i in range(len(path) - 3, -1, -1):
+    """
+    Takes in a path and returns an optimized one that eliminates colinear points.
+    """
+    for i in range(len(path) - 3, -1, -1): # have to move backwards to avoid IndexError
+        # define the current, next and next + 1 point
         current_pose = path[i]
-        next_pose = path[i + 1]
-        next2_pose = path[i + 2]
+        next = path[i + 1]
+        next_plus = path[i + 2]
 
-        check_line = is_colinear(current_pose, next_pose, next2_pose)
+        # check if the points are colinear
+        check_line = is_colinear(current_pose, next, next_plus)
         if check_line:
-            del path[i + 1]
+            del path[i + 1] # remove point that is in the middle of the line segment
     return path
+
+# example path
+path:list[tuple] = [(0,1), (0,2), (0,3), (1,4), (2,4), (3,4)] # output should be [(0,1), (0,3), (1,4), (3,4)]
 
 # test for is_colinear
 a = path[4]
 b = path[5]
 c = path[0]
 
-answer = is_colinear (a,b,c)
-print(answer)
+print(is_colinear (a,b,c))
 
-# test for optimize path
+# test for optimize_path
 print(optimize_path(path))
