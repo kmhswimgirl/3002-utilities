@@ -14,7 +14,8 @@ helper methods:
         sub methods:
         calc_slope(pt_a:tuple, pt_b:tuple) --> sub method
             Takes in two points and returns the slope.
-        
+            Equation: slope = (x2 - x1) / (y2 - y1)
+
         slope_ab = calc_slope(pt1, pt2)
         slope_bc = calc_slope(pt2, pt3)
 
@@ -30,6 +31,30 @@ ways to "optimize the path":
         Name: is_colinear()
         Take in the path and check if there are 3 co-linear points. 
         This means that the middle point (path index + 1) can be eliminated from the path.
+    
+    vectors
 """
 
 path:list[tuple] = [(0,1), (0,2), (0,3), (1,4), (2,4), (3,4)] # output should be [(0,1), (0,3), (1,4), (3,4)]
+
+def is_colinear(pt_1:tuple, pt_2:tuple, pt_3:tuple):
+    """
+    Returns true if the three points are colinear, false if they are not.
+    """
+    # slope calculator helper method
+    def calc_slope(pt_a:tuple, pt_b:tuple):
+        # assign (x,y) to input tuples
+        x1, y1 = pt_a[0], pt_a[1]
+        x2, y2 = pt_b[0], pt_b[1]
+
+        # calculate slope
+        slope = (x2 - x1) / (y2 - y1)
+        return slope
+
+    # slope calculations
+    slope_1_2 = calc_slope(pt_1, pt_2)
+    slope_2_3 = calc_slope(pt_2, pt_3)
+
+    # logic handling
+    if slope_1_2 == slope_2_3: return True
+    else: return False
