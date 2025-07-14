@@ -57,7 +57,6 @@ def is_colinear(pt_1:tuple, pt_2:tuple, pt_3:tuple):
         else:
             slope = (x2 - x1) / (y2 - y1)
         return slope
-    
 
     # slope calculations
     slope_1_2 = calc_slope(pt_1, pt_2)
@@ -67,9 +66,25 @@ def is_colinear(pt_1:tuple, pt_2:tuple, pt_3:tuple):
     if slope_1_2 == slope_2_3: return True
     else: return False
 
+def optimize_path(path: list[tuple]):
+
+    for i in range(len(path) - 3, -1, -1):
+        current_pose = path[i]
+        next_pose = path[i + 1]
+        next2_pose = path[i + 2]
+
+        check_line = is_colinear(current_pose, next_pose, next2_pose)
+        if check_line:
+            del path[i + 1]
+    return path
+
+# test for is_colinear
 a = path[4]
 b = path[5]
 c = path[0]
 
 answer = is_colinear (a,b,c)
 print(answer)
+
+# test for optimize path
+print(optimize_path(path))
