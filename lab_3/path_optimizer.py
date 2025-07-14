@@ -43,13 +43,21 @@ def is_colinear(pt_1:tuple, pt_2:tuple, pt_3:tuple):
     """
     # slope calculator helper method
     def calc_slope(pt_a:tuple, pt_b:tuple):
+
         # assign (x,y) to input tuples
         x1, y1 = pt_a[0], pt_a[1]
         x2, y2 = pt_b[0], pt_b[1]
 
         # calculate slope
-        slope = (x2 - x1) / (y2 - y1)
+        if (y2 - y1) == 0:
+            slope = (y2 - y1) / (x2 - x1)
+        elif (x1 == x2 ) and (y1 == y2):
+            print("two identical points")
+            slope = None
+        else:
+            slope = (x2 - x1) / (y2 - y1)
         return slope
+    
 
     # slope calculations
     slope_1_2 = calc_slope(pt_1, pt_2)
@@ -58,3 +66,10 @@ def is_colinear(pt_1:tuple, pt_2:tuple, pt_3:tuple):
     # logic handling
     if slope_1_2 == slope_2_3: return True
     else: return False
+
+a = path[4]
+b = path[5]
+c = path[0]
+
+answer = is_colinear (a,b,c)
+print(answer)
