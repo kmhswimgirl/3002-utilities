@@ -32,7 +32,6 @@ ways to "optimize the path":
         Name: is_colinear()
         Take in the path and check if there are 3 co-linear points. 
         This means that the middle point (path index + 1) can be eliminated from the path.
-    
 ===================================================
 """
 
