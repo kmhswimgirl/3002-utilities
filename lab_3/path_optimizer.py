@@ -25,13 +25,6 @@ helper methods:
                 return True
             else:
                 return False
-
-ways to "optimize the path":
-
-    three in a row:
-        Name: is_colinear()
-        Take in the path and check if there are 3 co-linear points. 
-        This means that the middle point (path index + 1) can be eliminated from the path.
 ===================================================
 """
 
