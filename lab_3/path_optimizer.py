@@ -73,6 +73,11 @@ def optimize_path(path: list[tuple]):
             del path[i + 1] # remove point that is in the middle of the line segment
     return path
 
+def line_of_sight(path: list[tuple]):
+    for pose in path:
+
+
+
 # example path
 path:list[tuple] = [(0,1), (0,2), (0,3), (1,4), (2,4), (3,4)] # output should be [(0,1), (0,3), (1,4), (3,4)]
 
