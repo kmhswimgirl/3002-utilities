@@ -1,11 +1,11 @@
 import numpy as np
 from PySide6.QtWidgets import QWidget
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QPainter, QPen, QColor
+from PySide6.QtGui import QPainter, QPen, QColor, QMouseEvent
 from PySide6 import QtWidgets
 
 class Grid(QWidget):
-    def __init__(self, grid_size=10, parent=None):
+    def __init__(self, grid_size=20, parent=None):
         super().__init__(parent)
         self.grid_size = grid_size
         self.setFixedSize(600, 600)  # square widget, only impacts size of wigit itself
@@ -28,18 +28,14 @@ class Grid(QWidget):
         width = self.width()
         height = self.height()
 
-        if self.grid_data is not None:
-            # draw grid
-            self.draw_occupancy_grid(painter, width, height)
-
         if self.show_grid_lines:
             # draw grid lines
             self.draw_grid_lines(painter, width, height)
 
-    def draw_occupancy_grid(self, painter, width, height):
-        """Draw the occupancy grid based on loaded data"""
-        if self.grid_data is None:
-            return
+    # def draw_occupancy_grid(self, painter, width, height):
+    #     """Draw the occupancy grid based on loaded data"""
+    #     if self.grid_data is None:
+    #         return
 
     def draw_grid_lines(self, painter, width, height):
         """Draw grid lines"""
@@ -60,6 +56,12 @@ class Grid(QWidget):
         for i in range(self.grid_size + 1):
             y = int(i * cell_height)
             painter.drawLine(0, y, width, y)
+
+    # def cursor_to_cell(self):
+    #     mouse_pos = (QMouseEvent.x, QMouseEvent.y)
+    #     self.grid_size = 
+
+
 
     def toggle_grid_lines(self):
         """toggle grid lines on/off"""

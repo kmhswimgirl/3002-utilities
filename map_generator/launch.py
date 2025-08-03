@@ -1,7 +1,7 @@
-from PySide6 import QtCore, QtWidgets
-from grid import Grid # my components
-from side_panels import MapSpecs
 import sys
+from PySide6 import QtWidgets
+from grid import Grid 
+from map_params import MapParams # side panel that determines the yaml file
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -13,32 +13,35 @@ class MainWindow(QtWidgets.QMainWindow):
         main_widget = QtWidgets.QWidget()
         self.setCentralWidget(main_widget)
 
-        # top level layout  --> vertical, contains text box, 
+        # top level layout  --> vertical, top item is file text box, 
         layout = QtWidgets.QVBoxLayout()
         main_widget.setLayout(layout)
 
-        # sub layout 1 --> horizontal, contains grid & control panel 
-        lay_1 = QtWidgets.QHBoxLayout()
+        # add the sub layout to the main layout
+        layout.addLayout(self.top_bar_layout())
+        layout.addLayout(self.main_layout())
 
-        # declare objects for sub widgets
-        grid = Grid()
-        yaml_panel = MapSpecs()
-
-        # name map text box, to get file name for use later, 
-        # use the callback: "file_name.text()"
+    # =============== Sub Layouts ===================
+    def top_bar_layout(self):
+        """top bar with file name input and button"""
+        layout = QtWidgets.QHBoxLayout()
+        file_name_txt = QtWidgets.QLabel("File Name:")
         file_name = QtWidgets.QLineEdit()
         file_name.setPlaceholderText('enter map name here')
-        layout.addWidget(file_name)
-
         button = QtWidgets.QPushButton("Generate Map")
+        layout.addWidget(file_name_txt)
+        layout.addWidget(file_name)
+        layout.addWidget(button)
+        return layout
 
-        # things added to sub layout 1
-        lay_1.addWidget(yaml_panel)
-        lay_1.addWidget(grid)
-        lay_1.addWidget(button)
-
-        # add the sub layout to the main layout
-        layout.addLayout(lay_1)
+    def main_layout(self):
+        """main horizontal layout with sidebar and grid"""
+        layout = QtWidgets.QHBoxLayout()
+        yaml_panel = MapParams()
+        grid = Grid()
+        layout.addWidget(yaml_panel)
+        layout.addWidget(grid)
+        return layout
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
