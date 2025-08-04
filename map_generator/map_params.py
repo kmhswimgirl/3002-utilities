@@ -6,12 +6,22 @@ class MapParams(QWidget): # parameters that get exported to the yaml file
         super().__init__(parent)
         self.setFixedSize(150,150)
 
-        b1 = QtWidgets.QPushButton("Button 1")
-        b2 = QtWidgets.QPushButton("Button 2")
-        b3 = QtWidgets.QPushButton("Button 3")
-
         panel_layout = QtWidgets.QVBoxLayout()
-        panel_layout.addWidget(b1)
-        panel_layout.addWidget(b2)
-        panel_layout.addWidget(b3)
+        label_widget = QWidget()
+        resolution = self.label_plus_text_box("Resolution:", "m per grid square")
+        origin = self.label_plus_text_box("Grid Origin:", "[x, y, yaw]")
+
+        panel_layout.addLayout(resolution)
+        panel_layout.addLayout(origin)
+
+        panel_layout.addWidget(label_widget)
         self.setLayout(panel_layout)
+
+    def label_plus_text_box(self, label:str, placeholder:str):
+        layout = QtWidgets.QHBoxLayout()
+        file_name_txt = QtWidgets.QLabel(f"{label}")
+        file_name = QtWidgets.QLineEdit()
+        file_name.setPlaceholderText(f'{placeholder}')
+        layout.addWidget(file_name_txt)
+        layout.addWidget(file_name)
+        return layout

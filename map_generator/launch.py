@@ -9,7 +9,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # central widget (main window)
         self.setWindowTitle("ROS OccupancyGrid & 2D Map Creator")
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(100, 100, 1000, 600)
         main_widget = QtWidgets.QWidget()
         self.setCentralWidget(main_widget)
 
