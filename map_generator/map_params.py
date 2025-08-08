@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QWidget, QPushButton
 from PySide6 import QtWidgets
 
 class MapParams(QWidget): # parameters that get exported to the yaml file
@@ -10,6 +10,8 @@ class MapParams(QWidget): # parameters that get exported to the yaml file
         label_widget = QWidget()
         resolution = self.label_plus_text_box("Resolution:", "m per grid square")
         origin = self.label_plus_text_box("Grid Origin:", "[x, y, yaw]")
+        apply_params = QPushButton('Apply Params')
+        apply_params.clicked.connect(self.store_params)
 
         panel_layout.addLayout(resolution)
         panel_layout.addLayout(origin)
@@ -25,3 +27,6 @@ class MapParams(QWidget): # parameters that get exported to the yaml file
         layout.addWidget(file_name_txt)
         layout.addWidget(file_name)
         return layout
+
+    def store_params(self):
+        return
