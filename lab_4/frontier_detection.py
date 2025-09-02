@@ -1,6 +1,5 @@
-
 # lab 4 detecting frontiers from the occupancy grid
-# 1D representation of the map (row-major order, 10x10 grid)
+# 1D representation of the map (10x10 grid)
 
 class Map:
     def __init__(self):
@@ -19,7 +18,6 @@ class Map:
 
         self.height = 10
         self.width = 10
-
 
 # map utilities
 def index_to_grid(index: int, width: int) -> tuple[int, int]:
@@ -58,8 +56,6 @@ def neighbors_8(index: int, width: int, height: int) -> list[int]:
     return neighbors
 
 # ============= Frontier Generation Code ===============
-m = Map()
-
 def get_frontier_cells(map:Map):
     frontier_cells = set()
     for index, cell in enumerate(map.data):
@@ -71,5 +67,5 @@ def get_frontier_cells(map:Map):
                     break
     return frontier_cells
 
-                
+m = Map()
 print(get_frontier_cells(m))
