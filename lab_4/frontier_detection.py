@@ -21,29 +21,14 @@ class Map:
 
 # map utilities
 def index_to_grid(index: int, width: int) -> tuple[int, int]:
-    """
-    Convert a 1D index to (row, col) coordinates for a grid of given width.
-    Args:
-        index (int): The 1D index in the map array.
-        width (int): The width of the grid.
-    Returns:
-        tuple[int, int]: (row, col) coordinates.
-    """
+   
     row = index // width
     col = index % width
     return (row, col)
 
 
 def neighbors_8(index: int, width: int, height: int) -> list[int]:
-    """
-    Get the 8-connected neighbors of a cell in a 1D grid map.
-    Args:
-        index (int): The 1D index in the map array.
-        width (int): The width of the grid.
-        height (int): The height of the grid.
-    Returns:
-        list[int]: List of 1D indices of valid 8-connected neighbors.
-    """
+   
     row, col = index_to_grid(index, width)
     neighbors = []
     for dr in [-1, 0, 1]:
@@ -67,5 +52,6 @@ def get_frontier_cells(map:Map):
                     break
     return frontier_cells
 
-m = Map()
-print(get_frontier_cells(m))
+def get_frontiers(map:Map, frontier_cells):
+    # its a DFS, already have filtered out which cells are frontier cells... 
+
