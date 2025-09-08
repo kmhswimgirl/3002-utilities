@@ -54,4 +54,5 @@ def get_frontier_cells(map:Map):
 
 def get_frontiers(map:Map, frontier_cells):
     # its a DFS, already have filtered out which cells are frontier cells... 
+    pass
 
