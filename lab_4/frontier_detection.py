@@ -26,18 +26,13 @@ def index_to_grid(index: int, width: int) -> tuple[int, int]:
     col = index % width
     return (row, col)
 
-
-def neighbors_8(index: int, width: int, height: int) -> list[int]:
-   
-    row, col = index_to_grid(index, width)
+def get_neighbors(cell, grid_shape):
+    x, y = cell
     neighbors = []
-    for dr in [-1, 0, 1]:
-        for dc in [-1, 0, 1]:
-            if dr == 0 and dc == 0:
-                continue
-            nr, nc = row + dr, col + dc
-            if 0 <= nr < height and 0 <= nc < width:
-                neighbors.append(nr * width + nc)
+    for dx, dy in [(-1,0),(1,0),(0,-1),(0,1),(1,1)]:  # 4-connected
+        nx, ny = x + dx, y + dy
+        if 0 <= nx < grid_shape[0] and 0 <= ny < grid_shape[1]:
+            neighbors.append((nx, ny))
     return neighbors
 
 # ============= Frontier Generation Code ===============
@@ -45,7 +40,7 @@ def get_frontier_cells(map:Map):
     frontier_cells = set()
     for index, cell in enumerate(map.data):
         if cell == 0:
-            next_to_cells = neighbors_8(index, map.width, map.height)
+            next_to_cells = get_neighbors(index, map.width, map.height)
             for item in next_to_cells:
                 if map.data[item] == -1:
                     frontier_cells.add(index)
