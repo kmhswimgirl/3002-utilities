@@ -1,14 +1,14 @@
-from typing import Iterable, Sequence, Tuple, Optional
+from typing import Iterable, Sequence, Tuple
 import numpy as np
 from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
-from line_of_sight import lines
+from bresenham import line
 
 Coord = Tuple[float, float]
 Cell = Tuple[int, int]
 
 class PathVisualizer:
-    """Minimal grid visualizer with world-centered integer cell centers and no seams."""
+    """Minimal grid visualizer with world-centered integer cell centers."""
 
     def __init__(self, grid_width: int = 25, grid_height: int = 25, cell_size: float = 1.0):
         self.w = int(grid_width)
@@ -145,16 +145,8 @@ if __name__ == "__main__":
     end = [(7, 5), (-7, 5), (7, -5), (-7, -5)]
 
     # color cells along the line-of-sight (world coords)
-    cells_1 = lines.line_of_sight_w(start, end[1])
-    vis.set_cells(cells_1)
-
-    c2 = lines.line_of_sight_w(start, end[0])
-    vis.set_cells(c2)
-    c3 = lines.line_of_sight_w(start, end[2])
-    vis.set_cells(c3)
-    c4 = lines.line_of_sight_w(start, end[3])
-    vis.set_cells(c4)
-
-    vis.plot_path([start, end[3]], color="blue", linewidth=2.5)
+    cells = line.bresenham(start, end[0])
+    vis.set_cells(cells)
+    vis.plot_path([start, end[0]], color="blue", linewidth=2.5)
 
     vis.show()

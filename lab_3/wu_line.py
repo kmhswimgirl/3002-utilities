@@ -2,18 +2,10 @@ import math
 from typing import Tuple
 
 '''
-function name: line_of_sight
----
-purpose: optimise the path the turtlebot is taking by cutting corners
-main challenge: have to figure out how to tell if a line passes through a grid square
-
-Ideas:
-   - have the line through a square relative to the starting square and refer to the xy block by it own coordinates.
-   - look at bresenham's line algo and wu's line algo
+Wu's line algorithm (not correct, missing an edge case --> Q2)
 
 '''
 class lines:
-
    def line_of_sight_w( p1:Tuple, p2:Tuple): # wu's line algorithm
       cells = []
       x0, y0 = p1[0], p1[1]
@@ -76,14 +68,6 @@ class lines:
          cells.append(p2)
       return cells
    
-   def los_b(p1:tuple, p2:Tuple): # bresenham's line algorithm
-      cells = []
-      x0, y0 = p1[0], p1[1]
-      x1, y1 = p2[0], p2[1]
-
-
-   
-      pass
 
 
 # gc = lines.line_of_sight((1,1), (5,10))
