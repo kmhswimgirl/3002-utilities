@@ -2,7 +2,8 @@ from typing import Iterable, Sequence, Tuple
 import numpy as np
 from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
-from bresenham import line
+from lab_3.bresenham import line
+from final_demo.perpendicular_lines import DriveGoal as dr
 
 Coord = Tuple[float, float]
 Cell = Tuple[int, int]
@@ -30,8 +31,8 @@ class PathVisualizer:
         # plotting objects
         self._fig, self._ax = plt.subplots()
         self._mesh = None
-        self._line = None
-
+        self._lines = []  # store multiple line objects
+        
         # build initial mesh
         self._create_mesh()
         self._setup_axes()
@@ -116,19 +117,42 @@ class PathVisualizer:
             self._update_image()
 
     # drawing -----------------------------------------------------------
-    def plot_path(self, points: Sequence[Coord], color: str = "blue", linewidth: float = 2.0):
+    def plot_path(self, points: Sequence[Coord], color: str = "blue", linewidth: float = 2.0, label: str = None):
         pts = np.asarray(points, dtype=float)
         if pts.ndim != 2 or pts.shape[1] != 2:
             raise ValueError("points must be a sequence of (x,y) pairs")
-        if self._line is None:
-            self._line, = self._ax.plot(pts[:, 0], pts[:, 1], color=color, linewidth=linewidth, zorder=3)
-            self._ax.scatter(pts[0, 0], pts[0, 1], color="green", zorder=4, label="start")
-            self._ax.scatter(pts[-1, 0], pts[-1, 1], color="black", zorder=4, label="end")
-            self._ax.legend(loc="upper right")
+        
+        # create new line for each path
+        line, = self._ax.plot(pts[:, 0], pts[:, 1], color=color, linewidth=linewidth, zorder=3, label=label)
+        self._lines.append(line)
+        
+        # add start/end markers for first line only (to avoid clutter), only end for the other lines
+        if len(self._lines) == 1:
+            self._ax.scatter(pts[0, 0], pts[0, 1], color="green", zorder=4, label="start", s=50)
+            self._ax.scatter(pts[-1, 0], pts[-1, 1], color="red", zorder=4, label="end", s=50)
         else:
-            self._line.set_data(pts[:, 0], pts[:, 1])
+            self._ax.scatter(pts[-1, 0], pts[-1, 1], color="black", zorder=4, label="end", s=50)
+
+        
         self._ax.relim()
         self._ax.autoscale_view()
+        
+        # update legend if any lines have labels
+        if any(line.get_label() and not line.get_label().startswith('_') for line in self._lines):
+            self._ax.legend(loc="upper right")
+
+    def clear_paths(self):
+        """Remove all plotted paths."""
+        for line in self._lines:
+            line.remove()
+        self._lines.clear()
+        
+        # clear legend and markers
+        collections = [c for c in self._ax.collections if hasattr(c, '_facecolors')]
+        for coll in collections:
+            coll.remove()
+        if self._ax.get_legend():
+            self._ax.get_legend().remove()
 
     def _update_image(self):
         # recreate mesh to update colors (simple and robust)
@@ -140,13 +164,19 @@ class PathVisualizer:
         plt.show(block=block)
 
 if __name__ == "__main__":
-    vis = PathVisualizer(grid_width=25, grid_height=25, cell_size=1.0)
-    start = (0, 0)
-    end = [(7, 5), (-7, 5), (7, -5), (-7, -5)]
+    vis = PathVisualizer(grid_width=20, grid_height=20, cell_size=1.0)
+    p2 = (-1,2)
+    p1 = (-1,-5)
+    coords = dr.perpendicular_lines(p2, p1, 3)
+
+    p3 = coords[0]
+    p4 = coords[1]
 
     # color cells along the line-of-sight (world coords)
-    cells = line.bresenham(start, end[0])
-    vis.set_cells(cells)
-    vis.plot_path([start, end[0]], color="blue", linewidth=2.5)
+    # cells = line.bresenham(start, end[0])
+    # vis.set_cells(cells)
+    vis.plot_path([p1, p2], color="blue", linewidth=2.5, label='frontier line')
+    vis.plot_path([p1, p3], color="red", linewidth=2.5, label='goal 1')
+    vis.plot_path([p1, p4], color="green", linewidth=2.5, label='goal 2')
 
     vis.show()

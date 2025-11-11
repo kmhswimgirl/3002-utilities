@@ -37,7 +37,6 @@ class line:
                 y0 += sy
         return cells
 
-
 # print(bresenham((0,0),(3,1)))  
 # print(bresenham((3,1),(0,0)))   
 # print(bresenham((-2,-2),(2,1))) 
